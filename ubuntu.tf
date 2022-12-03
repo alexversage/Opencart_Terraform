@@ -7,7 +7,10 @@ terraform {
 }
 
 provider "yandex" {
-  zone = "ru-central1-a"
+  token     = var.token
+  cloud_id  = var.cloud_id
+  folder_id = var.folder_id
+  zone      = var.zone
 }
 
 
@@ -21,7 +24,7 @@ resource "yandex_compute_instance" "vm-1" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd8kb72eo1r5fs97a1ki"
+      image_id = var.image_id
     }
   }
 
@@ -31,10 +34,9 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "alex:${file("~/.ssh/id_rsa.pub")}"
   }
 }
-
 
 resource "yandex_vpc_network" "network-1" {
   name = "network1"
@@ -42,7 +44,7 @@ resource "yandex_vpc_network" "network-1" {
 
 resource "yandex_vpc_subnet" "subnet-1" {
   name           = "subnet1"
-  zone           = "ru-central1-a"
+  zone           = var.zone
   network_id     = yandex_vpc_network.network-1.id
   v4_cidr_blocks = ["192.168.10.0/24"]
 }
