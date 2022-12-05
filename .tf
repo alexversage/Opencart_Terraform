@@ -8,5 +8,5 @@ terraform {
 }
 
 provider "yandex" {
-  zone = "<зона доступности по умолчанию>"
+  zone = var.zone
 }
