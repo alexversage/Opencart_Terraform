@@ -1,3 +1,5 @@
 *.tfvars
 backend.conf
 *tstate
+key.json
+.terraform/terraform.tfstate
